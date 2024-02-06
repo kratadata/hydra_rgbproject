@@ -13,14 +13,14 @@ Static IP address:
 3. Right-click on Wi-Fi or Local Area Connection. Click Properties and select Internet Protocol Version 4 (TCP/IPv4).
 4. Select "Use the following IP address" and enter the IP address (192.168.0.50) and Subnet mask (255.255.255.0)
 
----
-
 Virtual MIDI:
 
 1. Install [rtpMidi](https://www.tobias-erichsen.de/software/rtpmidi.html)
 2. Create a Session which will be seen by all machines/devices connected to the same network. To do this, click on the + sign in the My Sessions part of the window and edit its "Local name" and its "Bonjour name". Note that the Bonjour name will be the name that is visible to other computers. Make sure that you select "Anyone" under "Who might connnect to me".
 3. Check Enabled to enable the virtual MIDI Network.
 4. Launch TouchDesigner version 2023
+
+---
 
 Mac:
 
@@ -30,8 +30,6 @@ Static IP address:
 2. Right-click the network connection you want to use, then click Details.
 3. Click on “TCP/IP”.
 4. Click the Configure IPv4 pop-up menu and select "Manual". Enter the IP address (192.168.0.52) and subnet mask (255.255.255.0)
-
----
 
 Virtual MIDI:
 
