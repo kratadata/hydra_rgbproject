@@ -3,7 +3,7 @@
 #include <AnalogTouch.h>
 
 #define pinTouch A0
-#define pinMotor 2
+#define pinDistance 2
 #define pinAtomizer A5
 #define pinLED 6
 
@@ -18,17 +18,17 @@ bool touchedState = false;
 
 String incomingBytes;
 int touchValue = 0;
-int motorValue = 0;
+int distanceValue = 0;
 int vapourValue = 0;
 int ledValue = 0;
 
 void setup() {
   pinMode(pinAtomizer, OUTPUT);
-  pinMode(pinMotor, OUTPUT);
+  pinMode(pindistance, OUTPUT);
   pinMode(pinLED, OUTPUT);
   digitalWrite(pinLED,HIGH);  
   digitalWrite(pinAtomizer, LOW);  
-  digitalWrite(pinMotor, LOW);  
+  digitalWrite(pindistance, LOW);  
   Serial.begin(9600);
 }
 
@@ -43,9 +43,9 @@ void loop() {
     Serial.println(touchValue);
   } else if (incomingBytes.startsWith("vibration")) {
     incomingBytes.remove(0, 9);
-    motorValue = incomingBytes.toInt();
-    Serial.print("motor");
-    Serial.println(motorValue);
+    distanceValue = incomingBytes.toInt();
+    Serial.print("distance");
+    Serial.println(distanceValue);
   } else if (incomingBytes.startsWith("vapour")) {
     incomingBytes.remove(0, 6);
     vapourValue = incomingBytes.toInt();
@@ -82,15 +82,15 @@ void loop() {
       Serial.println(touchedState);
     } 
 
-    if (motorValue == 1) {
-      digitalWrite(pinMotor, HIGH);
+    if (distanceValue == 1) {
+      digitalWrite(pindistance, HIGH);
     } else if (vapourValue == 1) {
       digitalWrite(pinAtomizer, HIGH);      
     } else if (ledValue == 1) {
       digitalWrite(pinLED, HIGH); 
     } 
-    if (motorValue == 0) {
-      digitalWrite(pinMotor,0);
+    if (distanceValue == 0) {
+      digitalWrite(pindistance,0);
     }
     if (vapourValue == 0) {
      digitalWrite(pinAtomizer,0);
@@ -103,5 +103,5 @@ void loop() {
   digitalWrite(pinLED,HIGH);  
   delay(100);
   digitalWrite(pinLED,LOW);  
-  digitalWrite(pinMotor,HIGH);
+  digitalWrite(pindistance,HIGH);
 }
