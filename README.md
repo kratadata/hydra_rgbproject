@@ -67,4 +67,11 @@ Virtual MIDI:
 1. Launch TouchDesigner version [2023.11510](https://derivative.ca/download/archive) 
 2. Open RGBPrototype.toe. The file opens up in perform mode, however if you see nodes, press F1.
 
+**TO DO:** 
+
+    [ ] add websocket server
+    [ ] train classification model
+    [ ] create bat file
+
+
 # Ableton
