@@ -1,30 +1,53 @@
 #include <HCSR04.h>
+#include <AnalogTouch.h>
 
-byte triggerPin = 12;
-byte echoPin = 13;
-String incomingBytes;
-int distanceValue;
-
+#define pinAnalog A0
 #define delayTime 250
 
-void setup () {
-  Serial.begin(19200);
-  HCSR04.begin(triggerPin, echoPin);
+byte triggerPin = 13;
+byte echoCount = 2;
+byte* echoPins = new byte[echoCount]{ 12, 7 };
+
+// Slow down the automatic calibration cooldown
+#define offset 2
+#if offset > 6
+#error "Too big offset value"
+#endif
+
+void setup() {
+  Serial.begin(9600);
+  HCSR04.begin(triggerPin, echoPins, echoCount);
 }
 
-void loop () {
-  double* distances = HCSR04.measureDistanceCm();
-  Serial.print("distance");
-  Serial.println(distances[0]);
-  delay(delayTime);
-  //incomingBytes = Serial.readStringUntil('\n');
-  // if (incomingBytes.startsWith("distance")) {
-  //   incomingBytes.remove(0, 8);
-  //   distanceValue = incomingBytes.toInt();
-  // }
+void loop() {
+  //----------------------------
+  // TOUCH SENSORS
+  uint16_t value = analogTouchRead(pinAnalog);
 
-  // if (distanceValue == 1) {
-  //   Serial.println(distances[0]);
-  //   delay(delayTime);
-  // }
+  // Self calibrate
+  static uint16_t ref = 0xFFFF;
+  if (value < (ref >> offset))
+    ref = (value << offset);
+  // Cool down
+  else if (value > (ref >> offset))
+    ref++;
+
+  uint16_t value_calibrated = value - (ref >> offset);
+  // Print calibrated value
+  Serial.print("touch");
+  Serial.print(": ");
+  Serial.println(value_calibrated);
+
+  //----------------------------
+  // DISTANCE SENSORS
+  double* distances = HCSR04.measureDistanceCm();
+
+  for (int i = 0; i < echoCount; i++) {
+    Serial.print("distance");
+    Serial.print(i + 1);
+    Serial.print(": ");
+    Serial.println(distances[i]);
+  }
+
+  delay(delayTime);
 }

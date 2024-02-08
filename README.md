@@ -1,8 +1,32 @@
-## RGBproject Hydra Module
+# Hydra 🐙
 
-# Communication between TouchDesigner and Logic Pro
+Hydra consists out of two entities: the head and 4 children. 
 
-**Make sure that both computers are in the same network.**
+**The head** is a big module placed in the middle of the stage. It is controlled with a PC running TouchDesigner and Ableton, and it is built out of the following components:
+
+- **Inputs:**
+    1. Speech: 1 Microphone running speech recognition
+    2. Vision: 1 Camera running object classification. 
+    3. Sensors: Proximity sensor
+
+- **Outputs:**
+    1. Audio: sound coming from theatre speakers system
+    2. Light: Optic fibers
+    3. Sensor: Water vapour 
+
+**The children** are smaller modules placed in each community. It is not modulated in real-time, different audio tracks are triggered depending on simple values e.x. touch on/off, proximity close/far. It is built out of the following components:
+
+- **Inputs:**
+    1. Sensors: Touch and proximity sensors
+
+- **Outputs:**
+    1. Audio: Sound coming from single, portable speaker
+    2. Light: Optic fibers
+   
+---------
+
+# Network settings
+**Make sure that both computers are connected to the same network!**
 
 Windows:
 
@@ -18,7 +42,6 @@ Virtual MIDI:
 1. Install [rtpMidi](https://www.tobias-erichsen.de/software/rtpmidi.html)
 2. Create a Session which will be seen by all machines/devices connected to the same network. To do this, click on the + sign in the My Sessions part of the window and edit its "Local name" and its "Bonjour name". Note that the Bonjour name will be the name that is visible to other computers. Make sure that you select "Anyone" under "Who might connnect to me".
 3. Check Enabled to enable the virtual MIDI Network.
-4. Launch TouchDesigner version 2023
 
 ---
 
@@ -41,6 +64,7 @@ Virtual MIDI:
 
 # TouchDesigner
 
-1. Open RGBPrototype.toe. The file opens up in perform mode, however if you see nodes, press F1.
+1. Launch TouchDesigner version [2023.11510](https://derivative.ca/download/archive) 
+2. Open RGBPrototype.toe. The file opens up in perform mode, however if you see nodes, press F1.
 
-# Logic Pro
+# Ableton

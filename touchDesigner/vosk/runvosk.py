@@ -14,7 +14,6 @@ class LLM:
         self.udp_ip = "127.0.0.1"
         self.udp_port = 7000
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sock.bind((self.udp_ip, self.udp_port))
         self.sock.settimeout(0.1)  # Set a timeout for recvfrom
         self.start_threads()
 
