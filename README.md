@@ -5,6 +5,8 @@
     [ ] re-calibrate touch sensor every x seconds
     [ ] finish documentation
 
+---------
+
 # Hydra 🐙
 
 Hydra consists out of two entities: the head and 4 children. 
@@ -71,6 +73,8 @@ Virtual MIDI:
 4. Select existing connection in "Directory" and click connect.
 5. Launch Logic Pro X
 
+---------
+
 # TouchDesigner
 
 1. Launch TouchDesigner version [2023.11510](https://derivative.ca/download/archive) 
@@ -79,9 +83,9 @@ Virtual MIDI:
 **Interface**
 
 ![UI](/ui.png)
-Interface consitst out of 5 modules, which allow the user to monitor the inputs from different sensors.
+Interface consists of of 5 modules, that allow the user to monitor the inputs from different sensors.
 
-<p style="color:DeepSkyBlue; font-size:20px">Speech</p>
+# Speech🔵
 
 Based on [Vosk](https://alphacephei.com/vosk/) TTS to facilitate offline speech recognition. The model in use is [vosk-model-small-fr-0.22](https://alphacephei.com/vosk/models). The purpose of this module is to trigger certain sounds based on **trigger words**.
 1. Press "Active" to turn speech recognition on/off.
@@ -89,7 +93,7 @@ Based on [Vosk](https://alphacephei.com/vosk/) TTS to facilitate offline speech 
 3. The big area underneath displays all sentences. The rectangle with "chan1" indicates microphone signal.
    
 
-<p style="color:DarkViolet; font-size:20px">Vision</p>
+# Vision🟣
 
 Based on [MediaPipe TD Plugin](https://github.com/torinmb/mediapipe-touchdesigner), this module runs object recognition model to indicate the number of people in front of the camera
 1. Press "Active" to turn camera on/off. 
@@ -98,7 +102,7 @@ Based on [MediaPipe TD Plugin](https://github.com/torinmb/mediapipe-touchdesigne
 **Debugging** If object recognition does not start, press "Reset", next press "Active" off, then "Active" on. Wait for a few seconds.   
 
 
-<p style="color:SpringGreen; font-size:20px">Sensors</p>
+# Sensors🟢
 
 Based on [Arduino code](/arduino/distanceSensors/distanceSensors.ino). It tracks incoming values from two [RHWL-1601](https://www.adafruit.com/product/4007) distance sensors and capacitive sensor (Bare Conductive Electric Paint)
 1. Press "Active" to close/start connection with Serial Port. 
@@ -108,14 +112,16 @@ Based on [Arduino code](/arduino/distanceSensors/distanceSensors.ino). It tracks
 5. "Touch Sensor 1 Min Max" allows you to change the minimum and maximum range for the sensor to take effect on Ableton parameters. This varies greatly based on the humidity in the space, amount of people, etc. And needs to be calibrated before each show.
 
 
-<p style="color:DarkOrange; font-size:20px">Audio</p>
+# Audio🟠
 
 Uses TDAbleton extension to create a connection between TouchDesigner and Ableton in the same network. For setup please refer to [this section](#network).
 1. Press "Active" to close/start connection with Ableton. If connected shows 1 the connection was sucessful.
 2. Monitor the knobs to see how the values from sensors/camera/speech detection influence different parameters in Ableton.
 
-<p style="color:white; font-size:20px">Logger</p>
+# Logger⚪
 
 Shows all incoming/outgoing python messages. Useful for debugging.
+
+---------
 
 # Ableton
