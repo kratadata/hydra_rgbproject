@@ -1,45 +1,111 @@
-**TO DO:** 
-
-    [ ] add websocket server
-    [ ] create bat file
-    [ ] re-calibrate touch sensor every x seconds
-    [ ] finish documentation
-
----------
-
 # Hydra 🐙
+#  The head
 
-Hydra consists out of two entities: the head and 4 children. 
+A big module placed in the middle of the stage. It is controlled with a PC running TouchDesigner and Ableton, and it is built out of the following components:
 
-**The head** is a big module placed in the middle of the stage. It is controlled with a PC running TouchDesigner and Ableton, and it is built out of the following components:
+    Inputs:
+    1. Speech: 
+       * Single Microphone running speech recognition
+    2. Vision:
+       * Single Camera running object classification. 
+    3. Sensors: 
+       * 4 Proximity sensors
 
-    **Inputs:**
-    1. Speech: 1 Microphone running speech recognition
-    2. Vision: 1 Camera running object classification. 
-    3. Sensors: Proximity sensor
+    Outputs:
+    4. Audio: 
+       * Sound coming from theatre speakers system
+    5. Light: 
+       * 10 LEDs with optic fibers
+    6. Sensors: 
+       * 4 Water vapours 
 
-    **Outputs:**
-    1. Audio: sound coming from theatre speakers system
-    2. Light: Optic fibers
-    3. Sensor: Water vapour 
+### Schematics
 
-**The children** are smaller modules placed in each community. It is not modulated in real-time, different audio tracks are triggered depending on simple values e.x. touch on/off, proximity close/far. It is built out of the following components:
+![Big Hydra Image](big_hydra.png)
 
-    **Inputs:**
-    1. Sensors: Touch and proximity sensors
+### Components
 
-    **Outputs:**
-    1. Audio: Sound coming from single, portable speaker
-    2. Light: Optic fibers
-   
+| Object | Description |
+| --- | --- |
+| MICROCONTROLLER | Arduino Mega R3 |
+| WEBCAM | ?? |
+| MICROPHONE | ?? |
+| PROXIMITY SENSOR | RCWL-1601|
+| LIGHT | 12V RGB|
+| WATER VAPOUR| Mist Maker|
+| POWER | 24V + 5V USB |
+| EXTRA | |
+
+
+### Arduino code 
+`/arduino/HYDRA_small/HYDRA_small.ino `  
+
+
+Code is structured as follows:  
+   1. **Proximity sensors** trigger **lights** based on a certain distance threshold. The threshold can be changed in `/arduino/HYDRA_small/values.h`  
+   2. **Touch sensors** trigger **audio** based on a certain touch threshold. The threshold can be changed in `/arduino/HYDRA_small/values.h`.  
+    <span style="color:red">**IMPORTANT!! The songs need to be named using capital letters followed by number (starting at 1) and use ".wav" extension e.x. AUDIO1.wav**</span>      
+
+### TouchDesigner code 
+
+See below
+_________
+
+# The tentacle
+
+A smaller module placed in the center of each community. It is not modulated in real-time i.e. different audio tracks are triggered depending on some values e.x. touch on/off, proximity close/far. It is built out of the following components:
+
+    Inputs:
+    1. Sensors: 
+       * 4 Touch sensors
+       * 2 Proximity sensors
+
+    Outputs:
+    2. Audio: 
+       * A single portable speaker through line in
+    3. Light: 
+       * 4 LEDs with optic fibers
+
+
+### Schematics
+![Small Hydra Image](small_hydra.png)
+
+### Components
+
+| Object | Description |
+| --- | --- |
+| MICROCONTROLLER | Teensy 4.1 |
+| AUDIO | Audio Shield for Teensy 4.x |
+| SPEAKER | ?? |
+| SD-CARD | SONY 16GB|
+| PROXIMITY SENSOR | RCWL-1601|
+| TOUCH SENSOR | CROCODILE CLAMPS + ELECTROMAGNETIC PAINT|
+| LIGHT | 12V RGB|
+| POWER | 12V MIN. 2A POWER BANK |
+| EXTRA | |
+
+
+### Arduino code 
+`/arduino/HYDRA_small/HYDRA_small.ino `  
+
+
+Code is structured as follows:  
+   1. **Proximity sensors** trigger **lights** based on a certain distance threshold. The threshold can be changed in `/arduino/HYDRA_small/values.h`  
+   2. **Touch sensors** trigger **audio** based on a certain touch threshold. The threshold can be changed in `/arduino/HYDRA_small/values.h`.  
+    <span style="color:red">**IMPORTANT!! The songs need to be named using capital letters followed by number (starting at 1) and use ".wav" extension e.x. AUDIO1.wav**</span>
+
 ---------
+# Software 
 
+1. Arduino [IDE 2.3.3](https://www.arduino.cc/en/software)
+2. TouchDesigner version [2023.11510](https://derivative.ca/download/archive) 
+3. Ableton version ??
 
 # Network settings
 
-**Make sure that both computers are connected to the same network!**
+<span style="color:red">**IMPORTANT!! Make sure that both computers are connected to the same network!**</span>
 
-Windows:
+### Windows
 
 Static IP address:
 
@@ -56,7 +122,7 @@ Virtual MIDI:
 
 ---
 
-Mac:
+### Mac
 
 Static IP address:
 
@@ -73,14 +139,8 @@ Virtual MIDI:
 4. Select existing connection in "Directory" and click connect.
 5. Launch Logic Pro X
 
----------
-
+______________
 # TouchDesigner
-
-1. Launch TouchDesigner version [2023.11510](https://derivative.ca/download/archive) 
-2. Open RGBPrototype.toe.
-
-**Interface**
 
 ![UI](/ui.png)
 Interface consists of of 5 modules, that allow the user to monitor the inputs from different sensors.
@@ -124,4 +184,3 @@ Shows all incoming/outgoing python messages. Useful for debugging.
 
 ---------
 
-# Ableton
