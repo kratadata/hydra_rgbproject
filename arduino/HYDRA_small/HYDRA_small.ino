@@ -16,7 +16,7 @@ AudioConnection          patchCord2(playWav1, 1, audioOutput, 1);
 AudioControlSGTL5000     sgtl5000_1;
 
 float volume = 0; 
-float fadeDuration = 2000; // Duration of the fade in (in milliseconds)
+float fadeDuration = 1000; // Duration of the fade in (in milliseconds)
 unsigned long startTime;
 
 // Use these with the Teensy 3.5 & 3.6 & 4.1 SD card
@@ -97,8 +97,10 @@ void proximity(int t, int e, int ledPin, const char* name) {
   distance = (duration / 2) / 29.1;
   if (distance > 20) {
     digitalWrite(ledPin, LOW);
+    digitalWrite(vaporizer, HIGH);
   } else {
     digitalWrite(ledPin, HIGH);
+     digitalWrite(vaporizer,LOW);
   }
 
   Serial.print(name);
@@ -173,7 +175,7 @@ void audioSetup() {
   // This may wait forever if the SDA & SCL pins lack
   // pullup resistors
   sgtl5000_1.enable();
-  //sgtl5000_1.volume(1);
+  sgtl5000_1.volume(1);
 
   //SPI.setMOSI(SDCARD_MOSI_PIN);
   //SPI.setSCK(SDCARD_SCK_PIN);
@@ -187,24 +189,28 @@ void audioSetup() {
 }
 
 void fadeIn() {
-  unsigned long elapsed = millis() - startTime; // Calculate elapsed time
-  if (elapsed < fadeDuration) {
-    volume = map(elapsed, 0, fadeDuration, 0, 1); // Map elapsed time to volume
-    sgtl5000_1.volume(volume); // Set the volume
-  } else {
-    sgtl5000_1.volume(1); // Set volume to max after fade
+  // Start fade
+  startTime = millis();
+  while (millis() - startTime < fadeDuration) {
+    unsigned long elapsed = millis() - startTime;
+    float newVolume = (float)elapsed / (float)fadeDuration; // Calculate volume proportionally
+    sgtl5000_1.volume(newVolume);  // Set volume proportional to elapsed time
+    delay(10);  // Small delay to smooth out the fade
   }
+    sgtl5000_1.volume(1);  // Set volume proportional to elapsed time
 }
 
 void fadeOut() {
-  unsigned long elapsed = millis() - startTime; // Calculate elapsed time
-  if (elapsed < fadeDuration) {
-    volume = map(elapsed, 0, fadeDuration, 1, 0); // Map elapsed time to volume
-    sgtl5000_1.volume(volume); // Set the volume
-  } else {
-    playWav1.stop(); // Stop playback after fade
+  // Start fade
+  startTime = millis();
+  while (millis() - startTime < fadeDuration) {
+    unsigned long elapsed = millis() - startTime;
+    float newVolume = 1.0 - ((float)elapsed / (float)fadeDuration); // Decrease volume proportionally
+    sgtl5000_1.volume(newVolume);  // Set volume proportional to elapsed time
+    delay(10);  // Small delay to smooth out the fade
   }
-
+  sgtl5000_1.volume(0);  // Set volume proportional to elapsed time
+  playWav1.stop();  // Stop playback after fade-out completes
 }
 
 
@@ -212,55 +218,8 @@ void playFile(int inx) {
   //Serial.print("Playing...");
   char filename[20];
   snprintf(filename, sizeof(filename), "AUDIO%d.wav", inx); // Format the filename
-
   playWav1.play(filename);
-
   // A brief delay for the library read WAV info
   delay(25);
 }
 
-
-//void proximityAnalog(int t, int e, const char* name) {
-//  long duration, distance;
-//
-//  // Trigger the ultrasonic sensor
-//  digitalWrite(t, LOW);
-//  delayMicroseconds(2);
-//  digitalWrite(t, HIGH);
-//  delayMicroseconds(10);
-//  digitalWrite(t, LOW);
-//  duration = pulseIn(e, HIGH);
-//
-//  // Calculate distance (in cm)
-//  distance = (duration / 2) / 29.1;
-//
-//  // Non-blocking LED fading
-//  unsigned long currentMillis = millis();
-//  if (currentMillis - previousMillis >= fadeInterval) {
-//    previousMillis = currentMillis;
-//
-//    // Adjust brightness based on proximity
-//    if (distance > 100) {
-//      brightness -= fadeAmount; // Fade out if distance is greater than 100cm
-//      if (brightness <= 0) {
-//        brightness = 0; // Clamp brightness to minimum
-//      }
-//    } else {
-//      brightness += fadeAmount; // Fade in if distance is less than or equal to 100cm
-//      if (brightness >= 255) {
-//        brightness = 255; // Clamp brightness to maximum
-//      }
-//    }
-//
-//    // Apply brightness to both LEDs
-//    analogWrite(led1Pin, brightness);
-//    analogWrite(led2Pin, brightness);
-//  }
-//
-//  // Output sensor data to Serial Monitor
-//  Serial.print(name);
-//  Serial.print(": ");
-//  Serial.print(distance);
-//  Serial.println(" ");
-//
-//}

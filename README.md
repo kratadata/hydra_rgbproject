@@ -1,4 +1,26 @@
 # Hydra 🐙
+
+
+## Discussion Points
+- Costs of final product and work hours
+- Rehersal dates in November
+- Configuring Ableton
+- Configuring Ableton
+- Switch to Vosk for offline TTS (lower quality)
+
+# Running
+
+Click `RUN.bat` to get HYDRAted.
+
+# Software 
+
+1. Arduino [IDE 2.3.3](https://www.arduino.cc/en/software).
+   * [FastTouch](https://github.com/adrianfreed/FastTouch) library. Install as .zip library found in `arduino/libraries/FastTouch`.
+   * [Teensyduino](https://www.pjrc.com/teensy/td_download.html). Download and install via Board Manager.
+2. TouchDesigner version [2023.11510](https://derivative.ca/download/archive) 
+3. Ableton version ??
+4. [Anaconda](https://www.anaconda.com/download/success).
+
 #  The head
 
 A big module placed in the middle of the stage. It is controlled with a PC running TouchDesigner and Ableton, and it is built out of the following components:
@@ -21,15 +43,13 @@ A big module placed in the middle of the stage. It is controlled with a PC runni
 
 ### Schematics
 
-![Big Hydra Image](big_hydra.png)
+![Big Hydra Image](/images/big_hydra.png)
 
 ### Components
 
 | Object | Description |
 | --- | --- |
 | MICROCONTROLLER | Arduino Mega R3 |
-| WEBCAM | ?? |
-| MICROPHONE | ?? |
 | PROXIMITY SENSOR | RCWL-1601|
 | LIGHT | 12V RGB|
 | WATER VAPOUR| Mist Maker|
@@ -46,9 +66,6 @@ Code is structured as follows:
    2. **Touch sensors** trigger **audio** based on a certain touch threshold. The threshold can be changed in `/arduino/HYDRA_small/values.h`.  
     <span style="color:red">**IMPORTANT!! The songs need to be named using capital letters followed by number (starting at 1) and use ".wav" extension e.x. AUDIO1.wav**</span>      
 
-### TouchDesigner code 
-
-See below
 _________
 
 # The tentacle
@@ -68,7 +85,7 @@ A smaller module placed in the center of each community. It is not modulated in 
 
 
 ### Schematics
-![Small Hydra Image](small_hydra.png)
+![Small Hydra Image](/images/small_hydra.png)
 
 ### Components
 
@@ -77,7 +94,7 @@ A smaller module placed in the center of each community. It is not modulated in 
 | MICROCONTROLLER | Teensy 4.1 |
 | AUDIO | Audio Shield for Teensy 4.x |
 | SPEAKER | ?? |
-| SD-CARD | SONY 16GB|
+| SD-CARD | SONY 16GB plugged to Teensy (not Audio Shield!)|
 | PROXIMITY SENSOR | RCWL-1601|
 | TOUCH SENSOR | CROCODILE CLAMPS + ELECTROMAGNETIC PAINT|
 | LIGHT | 12V RGB|
@@ -94,12 +111,7 @@ Code is structured as follows:
    2. **Touch sensors** trigger **audio** based on a certain touch threshold. The threshold can be changed in `/arduino/HYDRA_small/values.h`.  
     <span style="color:red">**IMPORTANT!! The songs need to be named using capital letters followed by number (starting at 1) and use ".wav" extension e.x. AUDIO1.wav**</span>
 
----------
-# Software 
-
-1. Arduino [IDE 2.3.3](https://www.arduino.cc/en/software)
-2. TouchDesigner version [2023.11510](https://derivative.ca/download/archive) 
-3. Ableton version ??
+_________________________
 
 # Network settings
 
@@ -142,34 +154,49 @@ Virtual MIDI:
 ______________
 # TouchDesigner
 
-![UI](/ui.png)
-Interface consists of of 5 modules, that allow the user to monitor the inputs from different sensors.
+### Components
 
-### 🔵Speech
+| Object | Description |
+| --- | --- |
+| 
+| WEBCAM | ?? |
+| SD-CARD | SONY 16GB|
+| PROXIMITY SENSOR | RCWL-1601|
+| TOUCH SENSOR | CROCODILE CLAMPS + ELECTROMAGNETIC PAINT|
+| LIGHT | 12V RGB|
+| POWER | 12V MIN. 2A POWER BANK |
+| EXTRA | |
 
-Based on [Vosk](https://alphacephei.com/vosk/) TTS to facilitate offline speech recognition. The model in use is [vosk-model-small-fr-0.22](https://alphacephei.com/vosk/models). The purpose of this module is to trigger certain sounds based on **trigger words**.
-1. Press "Active" to turn speech recognition on/off.
-2. Add "Keywords" to filter out **trigger words**. The blue square next to it indicates that the word was found.
-3. The big area underneath displays all sentences. The rectangle with "chan1" indicates microphone signal.
-   
+### Interface
+
+![UI](/images/ui.png)
+The interface constinst of 5 modules.
 
 ### 🟣Vision
 
-Based on [MediaPipe TD Plugin](https://github.com/torinmb/mediapipe-touchdesigner), this module runs object recognition model to indicate the number of people in front of the camera
+Based on [MediaPipe TD Plugin](https://github.com/torinmb/mediapipe-touchdesigner), this module runs recognition model to indicate the number of people in front of the camera
 1. Press "Active" to turn camera on/off. 
-2. "Object recognition" displays found object in one of the class trained on [COCO dataset](https://storage.googleapis.com/mediapipe-tasks/object_detector/labelmap.txt)
-   
-**Debugging** If object recognition does not start, press "Reset", next press "Active" off, then "Active" on. Wait for a few seconds.   
+2. Press "Reset" to restart camera. **Debugging** If object recognition does not start, press "Reset", next press "Active" off, then "Active" on. Wait for a few seconds.
+3. "Object recognition" displays found object in one of the class trained on [COCO dataset](https://storage.googleapis.com/mediapipe-tasks/object_detector/labelmap.txt)
+4. Select external webcam. <span style="color:red">**IMPORTANT! Select different camera than in Classification Menu**</span>
+
+### 🟣Classification
+
+Based on [Teachable Machine](https://teachablemachine.withgoogle.com/train/image), this module runs object recognition model to classifiy the objects belonging to each community. See [TeachableMachine instructions](/TM.md). 
+
+1. Select external webcam. <span style="color:red">**IMPORTANT! Select different camera than in Classification Menu**</span>
+2. Place your model ID from Teachable Machine website.
+3. Click Pulse next to download model (only needed if updating the model).
+4. Click Pulse to reset the model (only needed if updating the model).
+5. Using RGB sliders define colors of each community. Depending on the dominant color in the camera view, the community category will be highlighted green. 
 
 
 ### 🟢Sensors
 
-Based on [Arduino code](/arduino/distanceSensors/distanceSensors.ino). It tracks incoming values from two [RHWL-1601](https://www.adafruit.com/product/4007) distance sensors and capacitive sensor (Bare Conductive Electric Paint)
+Connects Hydra Head with Ableton [Arduino code](/arduino/HYDRA_big/HYDRA_big/HYDRA_big.ino). It tracks incoming values from [RHWL-1601](https://www.adafruit.com/product/4007) distance sensors, controls LEDs and vaporizers.
 1. Press "Active" to close/start connection with Serial Port. 
-2. "Distance Value 1", "Distance Value 2", "Touch Value 1" display the current incoming values.
-3. "Distance Sensor 1 Min Max" allows you to change the minimum and maximum range (in cm) for the sensor to take effect on Ableton parameters. 
-4. "Distance Sensor 2 Min Max" see above.
-5. "Touch Sensor 1 Min Max" allows you to change the minimum and maximum range for the sensor to take effect on Ableton parameters. This varies greatly based on the humidity in the space, amount of people, etc. And needs to be calibrated before each show.
+2. "Distance Value 1" etc. display the current incoming values.
+3. "Distance Sensor 1 Min Max" etc. allows you to change the minimum and maximum range (in cm) for the sensor to take effect on Ableton parameters. 
 
 
 ### 🟠Audio
@@ -184,3 +211,11 @@ Shows all incoming/outgoing python messages. Useful for debugging.
 
 ---------
 
+### 🔵Speech
+
+Based on OpenAI [Whisper ](https://openai.com/index/whisper/) TTS model. <span style="color:red">**IMPORTANT! Requires OpenAI API Key in order to work**</span>. The purpose of this module is to trigger certain sounds based on **trigger words**.
+1. Press "Active" to turn speech recognition on/off.
+2. Add "Keywords" to filter out **trigger words**. The bgreen square next to it indicates that the word was found in the spoken sequence.
+3. Add your [OpenAI API Key](https://openai.com/index/openai-api/).
+4. Change language "en" for English and "fr" for French.
+   
