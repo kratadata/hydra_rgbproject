@@ -5,8 +5,7 @@
 - Costs of final product and work hours
 - Rehersal dates in November
 - Configuring Ableton
-- Configuring Ableton
-- Switch to Vosk for offline TTS (lower quality)
+- Switch to Vosk for offline TTS (lower quality but offline)
 
 # Running
 
