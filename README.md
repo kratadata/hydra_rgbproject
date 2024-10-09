@@ -1,17 +1,6 @@
 # Hydra 🐙
 
 
-## Discussion Points
-- Costs of final product and work hours
-- Rehersal dates in November
-- Configuring Ableton
-- Configuring Ableton
-- Switch to Vosk for offline TTS (lower quality)
-
-# Running
-
-Click `RUN.bat` to get HYDRAted.
-
 # Software 
 
 1. Arduino [IDE 2.3.3](https://www.arduino.cc/en/software).
@@ -20,6 +9,19 @@ Click `RUN.bat` to get HYDRAted.
 2. TouchDesigner version [2023.11510](https://derivative.ca/download/archive) 
 3. Ableton version ??
 4. [Anaconda](https://www.anaconda.com/download/success).
+5. After succsefful installation click `RUN.bat` 
+
+<br/>
+
+# Hardware
+
+1 PC running TouchDesigner  
+1 Laptop running Ableton  
+2 Webcams   
+1 Router    
+4 Portable Speakers 
+
+<br/>
 
 #  The head
 
@@ -47,13 +49,13 @@ A big module placed in the middle of the stage. It is controlled with a PC runni
 
 ### Components
 
-| Object | Description |
-| --- | --- |
-| MICROCONTROLLER | Arduino Mega R3 |
-| PROXIMITY SENSOR | RCWL-1601|
-| LIGHT | 12V RGB|
-| WATER VAPOUR| Mist Maker|
-| POWER | 24V + 5V USB |
+| Object | Description | Amount |  
+| --- | --- | --- |
+| MICROCONTROLLER | Arduino Mega R3 | 1 |
+| PROXIMITY SENSOR | RCWL-1601|  4 |
+| LIGHT | 12V RGB| 10 |
+| WATER VAPOUR| Mist Maker| 4 |
+| POWER | 24V + 5V USB | 1 |
 | EXTRA | |
 
 
@@ -63,14 +65,13 @@ A big module placed in the middle of the stage. It is controlled with a PC runni
 
 Code is structured as follows:  
    1. **Proximity sensors** trigger **lights** based on a certain distance threshold. The threshold can be changed in `/arduino/HYDRA_small/values.h`  
-   2. **Touch sensors** trigger **audio** based on a certain touch threshold. The threshold can be changed in `/arduino/HYDRA_small/values.h`.  
-    <span style="color:red">**IMPORTANT!! The songs need to be named using capital letters followed by number (starting at 1) and use ".wav" extension e.x. AUDIO1.wav**</span>      
+   2. **Vaporizer** trigger **audio** based on a certain touch threshold. The threshold can be changed in `/arduino/HYDRA_small/values.h`. 
 
-_________
+<br/>
 
 # The tentacle
 
-A smaller module placed in the center of each community. It is not modulated in real-time i.e. different audio tracks are triggered depending on some values e.x. touch on/off, proximity close/far. It is built out of the following components:
+A smaller module placed in the center of each community (4 in total). It is not modulated in real-time i.e. different audio tracks are triggered depending on some values e.x. touch on/off, proximity close/far. It is built out of the following components:
 
     Inputs:
     1. Sensors: 
@@ -87,18 +88,18 @@ A smaller module placed in the center of each community. It is not modulated in 
 ### Schematics
 ![Small Hydra Image](/images/small_hydra.png)
 
-### Components
+### Components per module
 
-| Object | Description |
-| --- | --- |
-| MICROCONTROLLER | Teensy 4.1 |
-| AUDIO | Audio Shield for Teensy 4.x |
-| SPEAKER | ?? |
-| SD-CARD | SONY 16GB plugged to Teensy (not Audio Shield!)|
-| PROXIMITY SENSOR | RCWL-1601|
-| TOUCH SENSOR | CROCODILE CLAMPS + ELECTROMAGNETIC PAINT|
-| LIGHT | 12V RGB|
-| POWER | 12V MIN. 2A POWER BANK |
+| Object | Description | Amount |
+| --- | --- | --- |
+| MICROCONTROLLER | Teensy 4.1 | 1 |
+| AUDIO | Audio Shield for Teensy 4.x | 1 |
+| SPEAKER | JBL Charge 5 | 1 |
+| SD-CARD | SONY 16GB plugged to Teensy (not Audio Shield!)| 1 |
+| PROXIMITY SENSOR | RCWL-1601|2 |
+| TOUCH SENSOR | CROCODILE CLAMPS + ELECTROMAGNETIC PAINT| 4 |
+| LIGHT | 12V RGB| 4 |
+| POWER | 12V MIN. 2A POWER BANK | 1 |
 | EXTRA | |
 
 
@@ -111,62 +112,15 @@ Code is structured as follows:
    2. **Touch sensors** trigger **audio** based on a certain touch threshold. The threshold can be changed in `/arduino/HYDRA_small/values.h`.  
     <span style="color:red">**IMPORTANT!! The songs need to be named using capital letters followed by number (starting at 1) and use ".wav" extension e.x. AUDIO1.wav**</span>
 
-_________________________
+<br/>
 
-# Network settings
-
-<span style="color:red">**IMPORTANT!! Make sure that both computers are connected to the same network!**</span>
-
-### Windows
-
-Static IP address:
-
-1. Click Start Menu > Control Panel > Network and Sharing Center or Network and Internet > Network and Sharing Center.
-2. Click Change adapter settings.
-3. Right-click on Wi-Fi or Local Area Connection. Click Properties and select Internet Protocol Version 4 (TCP/IPv4).
-4. Select "Use the following IP address" and enter the IP address (192.168.0.50) and Subnet mask (255.255.255.0)
-
-Virtual MIDI:
-
-1. Install [rtpMidi](https://www.tobias-erichsen.de/software/rtpmidi.html)
-2. Create a Session which will be seen by all machines/devices connected to the same network. To do this, click on the + sign in the My Sessions part of the window and edit its "Local name" and its "Bonjour name". Note that the Bonjour name will be the name that is visible to other computers. Make sure that you select "Anyone" under "Who might connnect to me".
-3. Check Enabled to enable the virtual MIDI Network.
-
----
-
-### Mac
-
-Static IP address:
-
-1. Go to the Apple menu and select System Preferences. Under Internet and Network, select Network.
-2. Right-click the network connection you want to use, then click Details.
-3. Click on “TCP/IP”.
-4. Click the Configure IPv4 pop-up menu and select "Manual". Enter the IP address (192.168.0.52) and subnet mask (255.255.255.0)
-
-Virtual MIDI:
-
-1. Open Audio/MIDI Setup from Utilities and select Show MIDI Window from the Window menu.
-2. Click twice on Network to open the MIDI Network panel.
-3. Create a Session which will be seen by all machines/devices connected to the same network. To do this, click on the + sign in the My Sessions part of the window and edit its "Local name" and its "Bonjour name". Note that the Bonjour name will be the name that is visible to other computers. Make sure that you select "Anyone" under "Who might connnect to me".
-4. Select existing connection in "Directory" and click connect.
-5. Launch Logic Pro X
-
-______________
 # TouchDesigner
 
-### Components
-
-| Object | Description |
-| --- | --- |
-| 
-| WEBCAM | ?? |
-| MICROPHONE | ?? |
-| EXTRA | |
 
 ### Interface
 
 ![UI](/images/ui.png)
-The interface constinst of 5 modules.
+
 
 ### 🟣Vision
 
@@ -197,21 +151,51 @@ Connects Hydra Head with Ableton [Arduino code](/arduino/HYDRA_big/HYDRA_big/HYD
 
 ### 🟠Audio
 
-Uses TDAbleton extension to create a connection between TouchDesigner and Ableton in the same network. For setup please refer to Network Settings in this README.
-1. Press "Active" to close/start connection with Ableton. If connected shows 1 the connection was sucessful.
-2. Monitor the knobs to see how the values from sensors/camera/speech detection influence different parameters in Ableton.
+Uses [TDAbleton](https://derivative.ca/UserGuide/TDAbleton) extension to create a connection between TouchDesigner and Ableton in the same network. 
+1. Press "Active" to close/start connection with Ableton. If "connected" shows 1 it means that the connection was sucessful.
+3. Trigger menu allows the controller in the backstage to trigger sounds based on audio triggers e.x. specific words.
+4. Volume control in Ableton
+5. Knobs viusalising how values coming from sensors/camera/speech detection influence the parameters in Ableton.
 
 ### ⚪Logger
 
 Shows all incoming/outgoing python messages. Useful for debugging.
 
----------
+</br>
 
-### 🔵Speech
+# Ableton
 
-Based on OpenAI [Whisper ](https://openai.com/index/whisper/) TTS model. <span style="color:red">**IMPORTANT! Requires OpenAI API Key in order to work**</span>. The purpose of this module is to trigger certain sounds based on **trigger words**.
-1. Press "Active" to turn speech recognition on/off.
-2. Add "Keywords" to filter out **trigger words**. The bgreen square next to it indicates that the word was found in the spoken sequence.
-3. Add your [OpenAI API Key](https://openai.com/index/openai-api/).
-4. Change language "en" for English and "fr" for French.
-   
+## Network settings
+
+<span style="color:red">**IMPORTANT!! Make sure that both computers are connected to the same network!**</span>
+
+### Windows
+
+Static IP address:
+
+1. Click Start Menu > Control Panel > Network and Sharing Center or Network and Internet > Network and Sharing Center.
+2. Click Change adapter settings.
+3. Right-click on Wi-Fi or Local Area Connection. Click Properties and select Internet Protocol Version 4 (TCP/IPv4).
+4. Select "Use the following IP address" and enter the IP address (192.168.0.50) and Subnet mask (255.255.255.0)
+
+
+---
+
+### Mac
+
+Static IP address:
+
+1. Go to the Apple menu and select System Preferences. Under Internet and Network, select Network.
+2. Right-click the network connection you want to use, then click Details.
+3. Click on “TCP/IP”.
+4. Click the Configure IPv4 pop-up menu and select "Manual". Enter the IP address (192.168.0.52) and subnet mask (255.255.255.0)
+
+## Connection with TouchDesigner
+Follow instruction installations [here](https://derivative.ca/UserGuide/TDAbleton)
+
+
+The three locations for TDA devices are:
+
+* TouchDesigner
+* TouchDesigner>TDA Project>Presets>Audio Effects>Max Audio Effect>Imported
+* TouchDesigner>TDA Project>Presets>MIDI Effects>Max MIDI Effect>Imported
