@@ -1,6 +1,5 @@
 # Hydra 🐙
 
-
 # Software 
 
 1. Arduino [IDE 2.3.3](https://www.arduino.cc/en/software).
@@ -165,6 +164,7 @@ Shows all incoming/outgoing python messages. Useful for debugging.
 
 # Ableton
 
+<<<<<<< HEAD
 ## Network settings
 
 <span style="color:red">**IMPORTANT!! Make sure that both computers are connected to the same network!**</span>
@@ -199,3 +199,11 @@ The three locations for TDA devices are:
 * TouchDesigner
 * TouchDesigner>TDA Project>Presets>Audio Effects>Max Audio Effect>Imported
 * TouchDesigner>TDA Project>Presets>MIDI Effects>Max MIDI Effect>Imported
+=======
+Based on OpenAI [Whisper ](https://openai.com/index/whisper/) TTS model. <span style="color:red">**IMPORTANT! Requires OpenAI API Key in order to work**</span>. The purpose of this module is to trigger certain sounds based on **trigger words**.
+1. Press "Active" to turn speech recognition on/off.
+2. Add "Keywords" to filter out **trigger words**. The bgreen square next to it indicates that the word was found in the spoken sequence.
+3. Add your [OpenAI API Key](https://openai.com/index/openai-api/).
+4. Change language "en" for English and "fr" for French.
+   
+>>>>>>> 02dcc6fcecab61a55966a1e675bf576e34598c3f
