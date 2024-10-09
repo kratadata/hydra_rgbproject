@@ -160,11 +160,7 @@ ______________
 | --- | --- |
 | 
 | WEBCAM | ?? |
-| SD-CARD | SONY 16GB|
-| PROXIMITY SENSOR | RCWL-1601|
-| TOUCH SENSOR | CROCODILE CLAMPS + ELECTROMAGNETIC PAINT|
-| LIGHT | 12V RGB|
-| POWER | 12V MIN. 2A POWER BANK |
+| MICROPHONE | ?? |
 | EXTRA | |
 
 ### Interface
