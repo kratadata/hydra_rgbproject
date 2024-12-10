@@ -16,6 +16,7 @@ void setup() {
   // Initialize LED pins as outputs
   for (int i = 0; i < 10; i++) {
     pinMode(ledPins[i], OUTPUT);
+    analogWrite(ledPins[i], 255);
   }
 
   // Initialize proximity sensor pins
@@ -52,7 +53,7 @@ void loop() {
   // Only fade the LEDs if an object is detected within 50 cm
   if (fadeEnabled) {
     for (int i = 0; i < 10; i++) {
-      analogWrite(ledPins[i], brightness);
+     // analogWrite(ledPins[i], brightness);
     }
 
     // Update brightness
@@ -65,11 +66,11 @@ void loop() {
   } else {
     // Optionally turn off the LEDs if no object is detected within range
     for (int i = 0; i < 10; i++) {
-      analogWrite(ledPins[i], 0); // Turn off LEDs when no proximity
+      //analogWrite(ledPins[i], 0); // Turn off LEDs when no proximity
     }
   }
 
-  Serial.println(brightness);
+  //Serial.println(brightness);
   delay(10); // Short delay for smooth fading
 }
 
