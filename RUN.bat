@@ -1,21 +1,11 @@
-@echo off
+@echo on
 
-cd %~dp0
+REM Open TouchDesigner with a specific file
+start "" "C:\Program Files\Derivative\TouchDesigner\bin\TouchDesigner.exe" "C:\Users\hydra-PC\Documents\GitHub\hydra_rgbproject\touchDesigner\Hydra_v1.toe"
 
-REM Check if the conda environment "hydra" exists
-conda env list | findstr "hydra" >nul
-if %errorlevel% neq 0 (
-    REM Create the conda environment "hydra"
-    conda create -n hydra python=3.11 -y
-)
+REM Wait for 5 seconds
+timeout /t 5 /nobreak >nul
 
-REM Activate the conda environment "hydra"
-call conda activate hydra
-
-REM Install the requirements from requirements.txt
-if exist requirements.txt (
-    pip install -r requirements.txt
-) else (
-    echo requirements.txt not found.
-)
+REM Open Ableton with a specific file
+start "" "C:\ProgramData\Ableton\Live 10 Suite\Program\Ableton Live 10 Suite.exe" "C:\Users\hydra-PC\Desktop\Global_Layer_ABELTON\Global_layer_abelton_v2 Project\Global_layer_abelton_v2.als"
 

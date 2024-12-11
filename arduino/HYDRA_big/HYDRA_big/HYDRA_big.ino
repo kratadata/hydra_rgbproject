@@ -1,14 +1,18 @@
 #define vaporizer 52
 
-const int ledPins[] = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
-const int triggerPins[] = {36, 32, 28, 24};
-const int echoPins[] = {34, 30, 26, 22};
+const int ledPins[] = { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+const int triggerPins[] = { 36, 32, 28, 24 };
+const int echoPins[] = { 34, 30, 26, 22 };
 
-int brightness = 0;      // Starting brightness for the LEDs
-int fadeAmount = 5;      // Amount to change the brightness each time through the loop
-unsigned long lastProximityCheck = 0; // Last time proximity was checked
-const unsigned long proximityInterval = 2000; // Interval for checking proximity (in milliseconds)
-bool fadeEnabled = false; // Flag to indicate if fading should happen
+int currentBrightness = 0;                    // Current brightness level
+int targetBrightness = 0;                     // Target brightness level based on distance
+unsigned long lastProximityCheck = 0;         // Last time proximity was checked
+const unsigned long proximityInterval = 100;  // Interval for checking proximity (in milliseconds)
+bool fadeEnabled = false;                     // Flag to indicate if fading should happen
+unsigned long distance1;
+unsigned long distance2;
+unsigned long distance3;
+unsigned long distance4;
 
 void setup() {
   Serial.begin(19200);
@@ -38,56 +42,56 @@ void loop() {
     // Reset the fadeEnabled flag for this proximity check cycle
     fadeEnabled = false;
 
-    // Check distances for all sensors
-    for (int i = 0; i < 4; i++) {
-      long distance = proximity(triggerPins[i], echoPins[i], "dist" + String(i + 1));
-      
-      // If any sensor detects a distance less than 50 cm, enable the fading
-      if (distance < 50 && distance > 30) { // Ensure distance > 0 (valid reading)
-        fadeEnabled = true;
-        digitalWrite(vaporizer, HIGH);
-      }
+    distance1 = proximity(triggerPins[0], echoPins[0], "dist1");
+    distance2 = proximity(triggerPins[1], echoPins[1], "dist2");
+    distance3 = proximity(triggerPins[2], echoPins[2], "dist3");
+    distance4 = proximity(triggerPins[3], echoPins[3], "dist4");
+
+    // Map distance to target brightness
+    targetBrightness = map(constrain(distance1, 10, 100), 10, 100, 10, 255);
+
+    if (distance1 < 100 && distance1 > 0) {  // Ensure distance > 0 (valid reading)
+      fadeEnabled = true;
+    }
+
+    if (distance2 < 100 && distance2 > 0) {
+      digitalWrite(vaporizer, HIGH);
+    } else {
+      digitalWrite(vaporizer, LOW);
     }
   }
 
-  // Only fade the LEDs if an object is detected within 50 cm
+
+  // Gradually adjust the brightness
   if (fadeEnabled) {
-    for (int i = 0; i < 10; i++) {
-     // analogWrite(ledPins[i], brightness);
+    if (currentBrightness < targetBrightness) {
+      currentBrightness += 5;
+    } else if (currentBrightness > targetBrightness) {
+      currentBrightness -= 5;
     }
 
-    // Update brightness
-    brightness += fadeAmount;
+    for (int i = 0; i < 11; i++) {
+      analogWrite(ledPins[i], currentBrightness);
+    }
 
-    // Reverse the fading direction at the limits
-    if (brightness <= 0 || brightness >= 255) {
-      fadeAmount = -fadeAmount;
-    }
-  } else {
-    // Optionally turn off the LEDs if no object is detected within range
-    for (int i = 0; i < 10; i++) {
-      //analogWrite(ledPins[i], 0); // Turn off LEDs when no proximity
-    }
+    delay(10);  // Short delay for smooth fading
   }
-
-  //Serial.println(brightness);
-  delay(10); // Short delay for smooth fading
 }
 
 // Proximity function to measure distance from the ultrasonic sensor
 long proximity(int t, int e, const String& name) {
   long duration, distance;
-  
+
   // Trigger the ultrasonic sensor
   digitalWrite(t, LOW);
   delayMicroseconds(2);
   digitalWrite(t, HIGH);
   delayMicroseconds(10);
   digitalWrite(t, LOW);
-  
+
   // Measure the duration of the echo pulse
   duration = pulseIn(e, HIGH);
-  
+
   // Calculate distance in cm
   distance = duration * 0.034 / 2;
 
