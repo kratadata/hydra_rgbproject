@@ -1,9 +1,9 @@
 export const access_token = ""  // your huggingface access token
 
 // trigger word "BRUNN"and space_name "moritz-brunnmatt" --> Moritz
-// trigger word "STUUEHL" and space_name "mia-stuehle" --> Mia
+// trigger word "STUUEHL" and space_name "fhnw-flux-lora" --> Mia
 // trigger word "BOODLE" and space_name "luisa-doodle" --> Luisa
-// trigger word "YOMICS" and space_name "yoana-comics" --> Yoana
+// trigger word "YOMICS" and space_name "fhnw-flux-lora" --> Yoana
 // trigger word "ATILE" and space_name "aiste-tiles" --> Aiste
 export const trigger_word = "ATILE" 
 export const space_name = "aiste-tiles" 
