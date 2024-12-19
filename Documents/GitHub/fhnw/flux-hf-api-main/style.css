@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+.dm-sans {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+}
+body {
+    background-color: black; 
+    color: white; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    font-family: 'DM Sans', sans-serif;
+    height: 100vh; 
+    margin: 0;
+}
+#result {
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-bottom: 30px; /* Add some space above the result */
+}
+#result img {
+    width: 40%; /* Set the image width to 50% of its container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+input[type="text"] {
+    padding: 10px; 
+    margin-bottom: 10px; 
+    border: none; 
+    border-radius: 5px; 
+    width: 300px;
+}
+button {
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    background-color: #545454;
+    color: white; 
+    cursor: pointer; 
+}
+button:hover {
+    background-color: #757575;
+}
+#info {
+    margin-top: 20px;
+}
+
+#gallery {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.gallery-item {
+    width: 128px;
+    height: 128px;
+    margin: 10px;
+    overflow: hidden;
+}
+.gallery-item img {
+    width: 100%;
+    height: auto;
+}
